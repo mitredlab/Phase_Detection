@@ -71,21 +71,46 @@ PRE_Perimeter_Matrix = extractMatrixFromResults(results, 'PRE_perimeter');
 ME_Area_Matrix = extractMatrixFromResults(results, 'ME_area');
 ME_Perimeter_Matrix = extractMatrixFromResults(results, 'ME_perimeter');
 
-figure
-createHistogramPlot(ME_Area_Matrix(:), 'ME of Area', 'Probability Density (1/\mum^2)', 'ME for Area', 1, 'linear');
-createHistogramPlot(ME_Perimeter_Matrix(:), 'ME of Perimeter', 'Probability Density (1/\mum)', 'ME for Perimeter', 2, 'linear');
-createHistogramPlot(PRE_Area_Matrix(:), 'PRE of Area (%)', 'Probability Density (1\mum^2)', 'PRE for Area', 3, 'linear');
-createHistogramPlot(PRE_Perimeter_Matrix(:), 'PRE of Perimeter (%)', 'Probability Density (\mum)', 'PRE for Perimeter', 4, 'linear');
+% figure
+% createHistogramPlot(ME_Area_Matrix(:), 'ME of Area', 'Probability Density (1/\mum^2)', 'ME for Area', 1, 'linear');
+% createHistogramPlot(ME_Perimeter_Matrix(:), 'ME of Perimeter', 'Probability Density (1/\mum)', 'ME for Perimeter', 2, 'linear');
+% createHistogramPlot(PRE_Area_Matrix(:), 'PRE of Area (%)', 'Probability Density (1\mum^2)', 'PRE for Area', 3, 'linear');
+% createHistogramPlot(PRE_Perimeter_Matrix(:), 'PRE of Perimeter (%)', 'Probability Density (\mum)', 'PRE for Perimeter', 4, 'linear');
+% 
+% figPosition1 = [100, 100, 560, 420];
+% figPosition2 = [700, 100, 560, 420];
+% figPosition3 = [100, 550, 560, 420];
+% figPosition4 = [700, 550, 560, 420];
+% 
+% createSurfacePlot(N_values_um, R_values_um, PRE_Area_Matrix, 'PRE of Area (%)', fontSize, 'PRE_Area.png', figPosition1);
+% createSurfacePlot(N_values_um, R_values_um, PRE_Perimeter_Matrix, 'PRE of Perimeter (%)', fontSize, 'PRE_Perimeter.png', figPosition2);
+% createSurfacePlot(N_values_um, R_values_um, ME_Area_Matrix, 'ME of Area', fontSize, 'ME_Area.png', figPosition3);
+% createSurfacePlot(N_values_um, R_values_um, ME_Perimeter_Matrix, 'ME of Perimeter', fontSize, 'ME_Perimeter.png', figPosition4);
 
-figPosition1 = [100, 100, 560, 420];
-figPosition2 = [700, 100, 560, 420];
-figPosition3 = [100, 550, 560, 420];
-figPosition4 = [700, 550, 560, 420];
+%% Printing the Errors for Fixed Grid Resolution
+gridResolution = 12.5;
+gridIndex = find(N_values_um == gridResolution);
 
-createSurfacePlot(N_values_um, R_values_um, PRE_Area_Matrix, 'PRE of Area (%)', fontSize, 'PRE_Area.png', figPosition1);
-createSurfacePlot(N_values_um, R_values_um, PRE_Perimeter_Matrix, 'PRE of Perimeter (%)', fontSize, 'PRE_Perimeter.png', figPosition2);
-createSurfacePlot(N_values_um, R_values_um, ME_Area_Matrix, 'ME of Area', fontSize, 'ME_Area.png', figPosition3);
-createSurfacePlot(N_values_um, R_values_um, ME_Perimeter_Matrix, 'ME of Perimeter', fontSize, 'ME_Perimeter.png', figPosition4);
+if isempty(gridIndex)
+    disp('Grid resolution of 12.5 µm not found.');
+    return;
+end
+
+filename = 'table_data_dilation.csv';
+fid = fopen(filename, 'w');
+
+header = {'Bubble Radius (µm)', 'PRE Area (%)', 'PRE Perimeter (%)', 'ME Area (µm^2)', 'ME Perimeter (µm)'};
+fprintf(fid, '%s,', header{1:end-1});
+fprintf(fid, '%s\n', header{end});
+
+dataFormat = '%.2f,%.5f,%.5f,%.2e,%.2e\n';
+for R_idx = 1:length(R_values_um)
+    fprintf(fid, dataFormat, R_values_um(R_idx), PRE_Area_Matrix(R_idx, gridIndex), PRE_Perimeter_Matrix(R_idx, gridIndex), ME_Area_Matrix(R_idx, gridIndex), ME_Perimeter_Matrix(R_idx, gridIndex));
+end
+
+fclose(fid);
+disp(['The results are written to the File ' filename]);
+
 
 %% Local Functions
 function matrix = extractMatrixFromResults(results, fieldName)

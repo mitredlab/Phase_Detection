@@ -16,14 +16,19 @@ conversionFactor = 12.6;
 perimeters_um = [bubbleMeasurements.Perimeter] * conversionFactor;
 areas_um2 = [bubbleMeasurements.Area] * conversionFactor^2;
 radii_um = sqrt(areas_um2 / pi);
+radiiFromPerimeter_um = perimeters_um / (2 * pi);
 
-
-
+%% Calculating the Dry Area and Contact Line
 [d_daf, d_cld] = calc_density_fraction(binaryMask, conversionFactor);
 fprintf('Dry Area Fraction (DAF): %f\n', d_daf);
 fprintf('Contact Line Density (CLD): %f\n', d_cld);
 
+%% Plotting Perimeter, Radii, and Area PDF/Count Distributions
 plotDistributions(perimeters_um, areas_um2, radii_um);
+
+%% Plotting the Radii from Perimeter and Area
+plotRadiiComparison(radiiFromArea_um, radiiFromPerimeter_um);
+plotPerimeterVsAreaRadius(radiiFromPerimeter_um, radiiFromArea_um);
 
 %% Printing the Top 10 Occuring Radii
 numBins = 15;
@@ -109,6 +114,34 @@ function plotPDF(data, plotTitle, bins, axisType, normalization, dataLabel)
     set(gca, 'MinorGridLineStyle', ':');
     set(gca, 'GridAlpha', 0.2);
     set(gca, 'MinorGridAlpha', 0.2);
+end
+
+function plotPerimeterVsAreaRadius(radiiFromPerimeter, radiiFromArea)
+    figure;
+    scatter(radiiFromPerimeter, radiiFromArea, 'filled');
+    xlabel('Radius from Perimeter (µm)', 'FontSize', 12, 'FontWeight', 'bold');
+    ylabel('Radius from Area (µm)', 'FontSize', 12, 'FontWeight', 'bold');
+    title('Scatter Plot of Radii: Perimeter vs. Area', 'FontSize', 14, 'FontWeight', 'bold');
+    set(gca, 'LineWidth', 2, 'FontSize', 12, 'FontWeight', 'bold');
+    set(gca, 'GridAlpha', 0.5, 'MinorGridAlpha', 0.2, 'Box', 'on'); % Adjust alpha for grid lines
+    set(gca, 'XMinorGrid', 'on', 'YMinorGrid', 'on');
+    grid on;
+end
+
+function plotRadiiComparison(radiiFromArea, radiiFromPerimeter)
+    figure;
+    hold on;
+    plot(radiiFromArea, 'r', 'LineWidth', 2);
+    plot(radiiFromPerimeter, 'b--', 'LineWidth', 2);
+    legend('Radius from Area', 'Radius from Perimeter', 'Location', 'best');
+    xlabel('Bubble Index', 'FontSize', 12, 'FontWeight', 'bold');
+    ylabel('Radius (µm)', 'FontSize', 12, 'FontWeight', 'bold');
+    title('Comparison of Radii Calculated from Area and Perimeter', 'FontSize', 14, 'FontWeight', 'bold');
+    set(gca, 'LineWidth', 2, 'FontSize', 12, 'FontWeight', 'bold');
+    set(gca, 'GridAlpha', 0.5, 'MinorGridAlpha', 0.2, 'Box', 'on'); % Adjust alpha for grid lines
+    set(gca, 'XMinorGrid', 'on', 'YMinorGrid', 'on');
+    grid on;
+    hold off;
 end
 
 function [d_daf, d_cld] = calc_density_fraction(binary_mask, conversionFactor)

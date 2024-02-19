@@ -95,7 +95,7 @@ if isempty(gridIndex)
     return;
 end
 
-filename = 'table_data.csv';
+filename = 'table_data_erosion.csv';
 fid = fopen(filename, 'w');
 
 header = {'Bubble Radius (µm)', 'PRE Area (%)', 'PRE Perimeter (%)', 'ME Area (µm^2)', 'ME Perimeter (µm)'};
@@ -108,7 +108,7 @@ for R_idx = 1:length(R_values_um)
 end
 
 fclose(fid);
-disp(['Top 10 bins table written to ' filename]);
+disp(['The results are written to the File ' filename]);
 %% Local Functions
 
 function matrix = extractMatrixFromResults(results, fieldName)
