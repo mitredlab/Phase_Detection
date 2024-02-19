@@ -95,26 +95,20 @@ if isempty(gridIndex)
     return;
 end
 
-% Open a file to write
 filename = 'table_data.csv';
 fid = fopen(filename, 'w');
 
-% Print the header
 header = {'Bubble Radius (µm)', 'PRE Area (%)', 'PRE Perimeter (%)', 'ME Area (µm^2)', 'ME Perimeter (µm)'};
 fprintf(fid, '%s,', header{1:end-1});
 fprintf(fid, '%s\n', header{end});
 
-% Print the data
 dataFormat = '%.2f,%.5f,%.5f,%.2e,%.2e\n';
 for R_idx = 1:length(R_values_um)
     fprintf(fid, dataFormat, R_values_um(R_idx), PRE_Area_Matrix(R_idx, gridIndex), PRE_Perimeter_Matrix(R_idx, gridIndex), ME_Area_Matrix(R_idx, gridIndex), ME_Perimeter_Matrix(R_idx, gridIndex));
 end
 
-% Close the file
 fclose(fid);
-
-
-
+disp(['Top 10 bins table written to ' filename]);
 %% Local Functions
 
 function matrix = extractMatrixFromResults(results, fieldName)

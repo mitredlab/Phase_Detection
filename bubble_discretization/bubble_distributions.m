@@ -17,6 +17,15 @@ perimeters_um = [bubbleMeasurements.Perimeter] * conversionFactor;
 areas_um2 = [bubbleMeasurements.Area] * conversionFactor^2;
 radii_um = sqrt(areas_um2 / pi);
 
+
+
+[d_daf, d_cld] = calc_density_fraction(binaryMask, conversionFactor);
+fprintf('Dry Area Fraction (DAF): %f\n', d_daf);
+fprintf('Contact Line Density (CLD): %f\n', d_cld);
+
+plotDistributions(perimeters_um, areas_um2, radii_um);
+
+%% Printing the Top 10 Occuring Radii
 numBins = 15;
 binEdges = linspace(min(radii_um), max(radii_um), numBins+1);
 [~, ~, binIdx] = histcounts(radii_um, binEdges);
@@ -32,13 +41,10 @@ top10BinsTable = table(binStarts', binEnds', top10BinCounts, 'VariableNames', {'
 
 disp('Top 10 most occurring radii bins (um) and their frequencies:');
 disp(top10BinsTable);
+filename = 'top10BinsTable.csv';
+writetable(top10BinsTable, filename);
+disp(['Top 10 bins table written to ' filename]);
 
-
-[d_daf, d_cld] = calc_density_fraction(binaryMask, conversionFactor);
-fprintf('Dry Area Fraction (DAF): %f\n', d_daf);
-fprintf('Contact Line Density (CLD): %f\n', d_cld);
-
-plotDistributions(perimeters_um, areas_um2, radii_um);
 
 %% Local Functions
 function plotDistributions(perimeters, areas, radii)
