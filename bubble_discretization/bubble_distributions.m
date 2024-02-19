@@ -25,12 +25,14 @@ binCounts = accumarray(binIdx', 1, [numBins 1], @sum, 0);
 top10BinCounts = sortedCounts(1:10);
 top10BinEdges = binEdges(sortIdx(1:10));
 
-fprintf('Top 10 most occurring radii bins (um) and their frequencies:\n');
-for i = 1:length(top10BinCounts)
-    binStart = top10BinEdges(i);
-    binEnd = binEdges(sortIdx(i) + 1);
-    fprintf('Bin: %.1f - %.1f um, Frequency: %d\n', binStart, binEnd, top10BinCounts(i));
-end
+binStarts = top10BinEdges;
+binEnds = binEdges(sortIdx(1:10) + 1);
+
+top10BinsTable = table(binStarts', binEnds', top10BinCounts, 'VariableNames', {'BinStart_um', 'BinEnd_um', 'Frequency'});
+
+disp('Top 10 most occurring radii bins (um) and their frequencies:');
+disp(top10BinsTable);
+
 
 [d_daf, d_cld] = calc_density_fraction(binaryMask, conversionFactor);
 fprintf('Dry Area Fraction (DAF): %f\n', d_daf);
@@ -38,6 +40,7 @@ fprintf('Contact Line Density (CLD): %f\n', d_cld);
 
 plotDistributions(perimeters_um, areas_um2, radii_um);
 
+%% Local Functions
 function plotDistributions(perimeters, areas, radii)
     plotAttributeDistributions(perimeters, 'Perimeter (µm)');
     plotAttributeDistributions(areas, 'Area (µm^2)');

@@ -76,11 +76,39 @@ createHistogramPlot(ME_Perimeter_Matrix(:), 'Mean Error of Perimeter (\mum)', 'F
 createHistogramPlot(PRE_Area_Matrix(:), 'PRE of Area (%)', 'Frequency', 'Histogram of PRE for Area', fontSize, 3, 'linear', 'adjusted');
 createHistogramPlot(PRE_Perimeter_Matrix(:), 'PRE of Perimeter (%)', 'Frequency', 'PRE for Perimeter', fontSize, 4, 'linear', 'adjusted');
 
-figPosition = [100, 100, 560, 420];
-createSurfacePlot(N_values_um, R_values_um, PRE_Area_Matrix, 'PRE of Area (%)', fontSize, 'PRE_Area.png', figPosition);
-createSurfacePlot(N_values_um, R_values_um, PRE_Perimeter_Matrix, 'PRE of Perimeter (%)', fontSize, 'PRE_Perimeter.png', figPosition);
+figPosition1 = [100, 100, 560, 420];
+figPosition2 = [700, 100, 560, 420];
+figPosition3 = [100, 550, 560, 420];
+figPosition4 = [700, 550, 560, 420];
 
-% Local Functions
+createSurfacePlot(N_values_um, R_values_um, PRE_Area_Matrix, 'PRE of Area (%)', fontSize, 'PRE_Area.png', figPosition1);
+createSurfacePlot(N_values_um, R_values_um, PRE_Perimeter_Matrix, 'PRE of Perimeter (%)', fontSize, 'PRE_Perimeter.png', figPosition2);
+createSurfacePlot(N_values_um, R_values_um, ME_Area_Matrix, 'ME of Area (\mum^2)', fontSize, 'ME_Area.png', figPosition3);
+createSurfacePlot(N_values_um, R_values_um, ME_Perimeter_Matrix, 'ME of Perimeter (\mum)', fontSize, 'ME_Perimeter.png', figPosition4);
+
+%% Printing the Errors for Fixed Grid Resolution
+gridResolution = 12.5;
+gridIndex = find(N_values_um == gridResolution);
+
+if isempty(gridIndex)
+    disp('Grid resolution of 12.5 µm not found.');
+    return;
+end
+
+headerFormat = '%-20s %-25s %-25s %-25s %-25s\n';
+separator = repmat('-', 1, 120); 
+fprintf('\n%s\n', separator);
+fprintf(headerFormat, 'Bubble Radius (µm)', 'PRE Area (%)', 'PRE Perimeter (%)', 'ME Area (µm^2)', 'ME Perimeter (µm)');
+fprintf('%s\n', separator);
+
+dataFormat = '%-20.2f %-25.5f %-25.5f %-25.2e %-25.2e\n';
+for R_idx = 1:length(R_values_um)
+    fprintf(dataFormat, R_values_um(R_idx), PRE_Area_Matrix(R_idx, gridIndex), PRE_Perimeter_Matrix(R_idx, gridIndex), ME_Area_Matrix(R_idx, gridIndex), ME_Perimeter_Matrix(R_idx, gridIndex));
+end
+fprintf('%s\n', separator);
+
+%% Local Functions
+
 function matrix = extractMatrixFromResults(results, fieldName)
     R_values = linspace(10E-6, 200E-6, 10);
     N_values = 20:10:250;
@@ -92,6 +120,7 @@ function matrix = extractMatrixFromResults(results, fieldName)
         end
     end
 end
+
 function createHistogramPlot(data, xLabel, yLabel, titleText, fontSize, subplotIndex, scaleType, binType)
     subplot(2, 2, subplotIndex);
     histogram(data, 'BinEdges', linspace(min(data), max(data), 11));
@@ -105,7 +134,6 @@ function createHistogramPlot(data, xLabel, yLabel, titleText, fontSize, subplotI
     end
 end
 
-
 function createSurfacePlot(N_values_um, R_values_um, matrix, titleText, fontSize, ~, figPosition)
     figure;
     set(gcf, 'Position', figPosition);
@@ -114,8 +142,11 @@ function createSurfacePlot(N_values_um, R_values_um, matrix, titleText, fontSize
     s.EdgeColor = 'none';
     xlabel('Grid Cell Size (\mum)', 'FontSize', fontSize);
     ylabel('Bubble Radius (R) [\mum]', 'FontSize', fontSize);
-    zlabel(titleText, 'FontSize', fontSize);
+    zlabel(titleText, 'FontSize', fontSize); 
+    title(titleText, 'FontSize', fontSize); 
     colorbar;
+    box on; 
+    set(gca, 'LineWidth', 2);
 end
 
 
