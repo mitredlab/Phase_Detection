@@ -95,17 +95,25 @@ if isempty(gridIndex)
     return;
 end
 
-headerFormat = '%-20s %-25s %-25s %-25s %-25s\n';
-separator = repmat('-', 1, 120); 
-fprintf('\n%s\n', separator);
-fprintf(headerFormat, 'Bubble Radius (µm)', 'PRE Area (%)', 'PRE Perimeter (%)', 'ME Area (µm^2)', 'ME Perimeter (µm)');
-fprintf('%s\n', separator);
+% Open a file to write
+filename = 'table_data.csv';
+fid = fopen(filename, 'w');
 
-dataFormat = '%-20.2f %-25.5f %-25.5f %-25.2e %-25.2e\n';
+% Print the header
+header = {'Bubble Radius (µm)', 'PRE Area (%)', 'PRE Perimeter (%)', 'ME Area (µm^2)', 'ME Perimeter (µm)'};
+fprintf(fid, '%s,', header{1:end-1});
+fprintf(fid, '%s\n', header{end});
+
+% Print the data
+dataFormat = '%.2f,%.5f,%.5f,%.2e,%.2e\n';
 for R_idx = 1:length(R_values_um)
-    fprintf(dataFormat, R_values_um(R_idx), PRE_Area_Matrix(R_idx, gridIndex), PRE_Perimeter_Matrix(R_idx, gridIndex), ME_Area_Matrix(R_idx, gridIndex), ME_Perimeter_Matrix(R_idx, gridIndex));
+    fprintf(fid, dataFormat, R_values_um(R_idx), PRE_Area_Matrix(R_idx, gridIndex), PRE_Perimeter_Matrix(R_idx, gridIndex), ME_Area_Matrix(R_idx, gridIndex), ME_Perimeter_Matrix(R_idx, gridIndex));
 end
-fprintf('%s\n', separator);
+
+% Close the file
+fclose(fid);
+
+
 
 %% Local Functions
 
