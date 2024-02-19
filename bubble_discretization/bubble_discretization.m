@@ -2,9 +2,9 @@
 clc; close all; clear;
 
 L = 0.001;
-numSimulations = 5e3;
-N_values = 20:10:250;
-R_values = linspace(10E-6, 100E-6, 10);
+numSimulations = 5000;
+N_values = linspace(20, 250, 24);
+R_values = linspace(10E-6, 200E-6, 10);
 results = struct();
 rng(0);
 totalIterations = length(N_values) * length(R_values) * numSimulations;
@@ -58,8 +58,8 @@ save('bubble_discretization_results.mat', 'results');
 
 load('bubble_discretization_results.mat', 'results');
 
-R_values_um = linspace(10E-6, 100E-6, 10) * 1e6;
-N_values_um = (0.001 ./ (20:10:250)) * 1e6;
+R_values_um = linspace(10E-6, 200E-6, 10) * 1e6;
+N_values_um = (0.001 ./ linspace(20, 250, 24)) * 1e6;
 fontSize = 16;
 figPosition = [100, 100, 1024, 768];
 
@@ -82,7 +82,7 @@ createSurfacePlot(N_values_um, R_values_um, PRE_Perimeter_Matrix, 'PRE of Perime
 
 % Local Functions
 function matrix = extractMatrixFromResults(results, fieldName)
-    R_values = linspace(10E-6, 100E-6, 10);
+    R_values = linspace(10E-6, 200E-6, 10);
     N_values = 20:10:250;
     matrix = zeros(length(R_values), length(N_values));
     for N_idx = 1:length(N_values)
@@ -92,7 +92,6 @@ function matrix = extractMatrixFromResults(results, fieldName)
         end
     end
 end
-
 function createHistogramPlot(data, xLabel, yLabel, titleText, fontSize, subplotIndex, scaleType, binType)
     subplot(2, 2, subplotIndex);
     histogram(data, 'BinEdges', linspace(min(data), max(data), 11));
