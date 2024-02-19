@@ -36,7 +36,7 @@ end
 fprintf('Dry Area Fraction (DAF): %f\n', d_daf);
 fprintf('Contact Line Density (CLD): %f\n', d_cld);
 
-% plotDistributions(perimeters_um, areas_um2, radii_um);
+plotDistributions(perimeters_um, areas_um2, radii_um);
 
 function plotDistributions(perimeters, areas, radii)
     plotAttributeDistributions(perimeters, 'Perimeter (µm)');
@@ -81,7 +81,13 @@ function plotPDF(data, plotTitle, bins, axisType, normalization, dataLabel)
     end
     xlabel(dataLabel);
     if strcmp(normalization, 'pdf')
-        ylabel('Probability Density');
+        if contains(dataLabel, 'Area')
+            ylabel('Probability Density (1/\mum^2)');
+        elseif contains(dataLabel, 'Perimeter')
+            ylabel('Probability Density (1/\mum)');
+        else
+            ylabel('Probability Density (1/\mum)');
+        end
     else
         ylabel('Count');
     end

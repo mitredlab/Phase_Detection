@@ -72,10 +72,10 @@ ME_Area_Matrix = extractMatrixFromResults(results, 'ME_area');
 ME_Perimeter_Matrix = extractMatrixFromResults(results, 'ME_perimeter');
 %%
 figure
-createHistogramPlot(ME_Area_Matrix(:), 'ME of Area (\mum^2)', 'Probability density', 'ME for Area', 1, 'linear');
-createHistogramPlot(ME_Perimeter_Matrix(:), 'ME of Perimeter (\mum)', 'Probability density', 'ME for Perimeter', 2, 'linear');
-createHistogramPlot(PRE_Area_Matrix(:), 'PRE of Area (%)', 'Probability density', 'PRE for Area', 3, 'linear');
-createHistogramPlot(PRE_Perimeter_Matrix(:), 'PRE of Perimeter (%)', 'Probability density', 'PRE for Perimeter', 4, 'linear');
+createHistogramPlot(ME_Area_Matrix(:), 'ME of Area', 'Probability Density (1/\mum^2)', 'ME for Area', 1, 'linear');
+createHistogramPlot(ME_Perimeter_Matrix(:), 'ME of Perimeter', 'Probability Density (1/\mum)', 'ME for Perimeter', 2, 'linear');
+createHistogramPlot(PRE_Area_Matrix(:), 'PRE of Area (%)', 'Probability Density (1\mum^2)', 'PRE for Area', 3, 'linear');
+createHistogramPlot(PRE_Perimeter_Matrix(:), 'PRE of Perimeter (%)', 'Probability Density (\mum)', 'PRE for Perimeter', 4, 'linear');
 %%
 figPosition1 = [100, 100, 560, 420];
 figPosition2 = [700, 100, 560, 420];
