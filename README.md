@@ -32,7 +32,6 @@ To set up this project for replication of results or further development, follow
 ```bash
 git clone https://github.com/chikap421/cvboil
 cd cvboil
-pip install -r requirements.txt
 ```
 
 ## Tutorials
