@@ -17,10 +17,7 @@ This repository is the official GitHub page accompanying the thesis titled above
   - [Segmentation](#segmentation)
   - [Fine-Tuning](#fine-tuning)
   - [Detection](#detection)
-- [Usage](#usage)
 - [Data](#data)
-- [Results](#results)
-- [Contributing](#contributing)
 - [License](#license)
 - [Citations](#citations)
 
@@ -68,3 +65,39 @@ After successful segmentation, this tutorial helps users understand how to detec
 ### Presentation of Results
 Finally, this tutorial showcases how to interpret and present the results obtained from the U-Net models. It provides insights into how the results can be utilized for further analysis and reporting.
 - Watch the results presentation here: [Presentation of Results Tutorial](https://www.youtube.com/watch?v=IkNgL3g9rlo&list=PLQ0mDSFR46UAAvgCA32vduLkCst_bzr9O&index=2)
+
+## Data
+The data used in this project consists of high-speed video recordings of boiling phenomena, obtained through experimental setups at the MIT Red Lab. For more information about the lab and other research conducted there, visit their official website: [MIT Red Lab](https://bucci.mit.edu/). Access to the data used in this project is restricted to authorized users due to the experimental nature of the recordings. For access requests or more information, please contact the lab PI.
+
+## License
+This project is licensed under the MIT License.
+
+## Citations
+Please cite the following works if you use this project's software, data, or methodologies in your own research:
+
+### Thesis
+```bibtex
+@thesis{Maduabuchi2024,
+  author       = {Chika Maduabuchi},
+  title        = {Automated Segmentation and Analysis of High-Speed Video Phase-Detection Data for Boiling Heat Transfer Characterization Using U-Net Convolutional Neural Networks and Uncertainty Quantification},
+  school       = {Massachusetts Institute of Technology},
+  year         = 2024,
+  address      = {Cambridge, MA},
+  month        = 9,
+  note         = {Publication forthcoming}
+  }
+```  
+### U-Net Paper
+```bibtex
+@article{ronneberger2015u,
+  title={U-net: Convolutional networks for biomedical image segmentation},
+  author={Ronneberger, Olaf and Fischer, Philipp and Brox, Thomas},
+  journal={International Conference on Medical image computing and computer-assisted intervention},
+  pages={234--241},
+  year={2015},
+  organization={Springer}
+}
+```
+
+
+
