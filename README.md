@@ -36,3 +36,35 @@ To set up this project for replication of results or further development, follow
 git clone https://github.com/chikap421/cvboil
 cd cvboil
 pip install -r requirements.txt
+```
+
+## Tutorials
+This section provides detailed tutorials to help users effectively use the tools developed in this project for their own data or contribute to further research.
+
+### Installation Guide
+A comprehensive guide to installing the necessary dependencies and setting up the environment to run the project. Follow the steps below and refer to the external resources for more detailed instructions.
+- Complete installation instructions are available here: [Installation Guide](https://lmb.informatik.uni-freiburg.de/resources/opensource/unet/#installation)
+
+### Annotation of Boiling Data
+Learn how to annotate boiling phenomena using the tools provided. This tutorial will guide you through the annotation process, essential for preparing your data for segmentation.
+- Watch the annotation tutorial here: [Annotation Tutorial](https://www.youtube.com/watch?v=NvnxIK_CoTE&list=PLQ0mDSFR46UAAvgCA32vduLkCst_bzr9O)
+
+### Managing Annotations
+Once annotations are created, managing them effectively is crucial for maintaining data integrity and preparing for model training. This tutorial covers best practices for annotation management.
+- Learn how to manage your annotations here: [Managing Annotations Tutorial](https://www.youtube.com/watch?v=pikQh7HQ8WM&list=PLQ0mDSFR46UAAvgCA32vduLkCst_bzr9O&index=3)
+
+### Segmentation
+Learn how to apply the U-Net models for segmenting bubbles in boiling phenomena from high-speed video data. This tutorial covers the process from data preparation to running the segmentation models.
+- Detailed tutorial on segmentation can be found here: [Segmentation Tutorial](https://lmb.informatik.uni-freiburg.de/resources/opensource/unet/#segmentation)
+
+### Fine-Tuning
+This tutorial provides guidelines on how to fine-tune the pre-trained U-Net models to adapt to specific characteristics of new datasets or experimental conditions different from the training set. It includes parameter adjustments, training tips, and evaluation criteria.
+- Learn more about fine-tuning the models here: [Fine-Tuning Tutorial](https://lmb.informatik.uni-freiburg.de/resources/opensource/unet/#finetuning)
+
+### Detection
+After successful segmentation, this tutorial helps users understand how to detect and classify different phases within the segmented images. It includes instructions on modifying detection algorithms to improve accuracy and adapt to specific features of the boiling process.
+- Check the detailed detection methods here: [Detection Tutorial](https://lmb.informatik.uni-freiburg.de/resources/opensource/unet/#detection)
+
+### Presentation of Results
+Finally, this tutorial showcases how to interpret and present the results obtained from the U-Net models. It provides insights into how the results can be utilized for further analysis and reporting.
+- Watch the results presentation here: [Presentation of Results Tutorial](https://www.youtube.com/watch?v=IkNgL3g9rlo&list=PLQ0mDSFR46UAAvgCA32vduLkCst_bzr9O&index=2)
